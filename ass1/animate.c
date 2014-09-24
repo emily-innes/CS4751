@@ -3,40 +3,73 @@
 #include <stdio.h>
 double width=250.0;
 double height=250.0;
-double x1, x2, x3;
+double x1, x2;
 double y,y2;
-double speed =0.0000025;
+double speed =0.25;
+double colorChange=0.001;
+double red,blue;
 void init (void){
-  glClearColor (1.0,1.0,0.0,0.0);
+  glClearColor (1.0,1.0,1.0,0.0);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho(0.0,1.0,0.0,1.0,-1.0,1.0);
-  x1=width*3.0/4.0;
-  x2=width/4.0;
-  y=x1;
-  x3=x2+((x1-x2)/2.0); 
-  y2=x2;
+  x1=0;
+  x2=100;
+  y=25;
+  y2=125;
+  red=1.0;
+  blue=0.0;
   
 }
 
 void display (void){
+  double hold;
   glClear (GL_COLOR_BUFFER_BIT);
-  glColor3f(0.0,0.0,1.0);
-  printf("{ %f , %f} { %f , %f} { %f , %f}",x1, y, x2, y, x3, y2);
+  glColor3f(red,0,blue);
+  //printf("{ %f , %f} { %f , %f} { %f , %f}",x1, y, x2, y, x3, y2);
   glBegin(GL_POLYGON);
       glVertex3f (x1, y, 0.0);
       glVertex3f (x2, y, 0.0);
       glVertex3f (x2, y2, 0.0);
       glVertex3f(x1,y2,0.0);
    glEnd();
+   glFlush();
+   glutSwapBuffers();
+   //usleep(200000);
    x1+=speed;
    x2+=speed;
+   if(red>=0){
+	red-=colorChange;
+   }
+   else{
+	blue+=colorChange;
+   }
+   if(blue>=1){
+	hold=red;
+	red=blue;
+	blue=hold;
+   }
    
+  
+   if (x2>=width){
+	x1-=speed;
+	speed=-speed;
+   }
+   if(x1<=0){
+	x1=0;
+	speed=0;
+   }
+   glutPostRedisplay();
  
 
 }
 void mouse(int btn, int state, int x, int y){
   if (btn==GLUT_RIGHT_BUTTON && state==GLUT_DOWN) exit(0);
+  if(btn==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
+  x1=0;
+  x2=100;
+  speed=0.25;
+}
 }
 
 void keyboard(unsigned char key, int x, int y){
@@ -49,17 +82,16 @@ glOrtho(0.0, (GLdouble)w, 0.0,(GLdouble)h,-1.0, 1.0);
 glMatrixMode(GL_MODELVIEW);
 glLoadIdentity();
 glViewport(0,0,w,h);
-x1=w*3.0/4.0;
-x2=w/4.0;
-x3=x2+((x1-x2)/2.0); 
 glFlush();
+width=w;
+height=h;
 
 }
   
 int main (int argc, char** argv){
 
   glutInit(&argc, argv);
-  glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
   glutInitWindowSize(width,height);
   glutInitWindowPosition(100,100);
   glutCreateWindow("Assignment 1");
