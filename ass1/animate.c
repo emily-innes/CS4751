@@ -13,6 +13,7 @@ void init (void){
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho(0.0,1.0,0.0,1.0,-1.0,1.0);
+//initializing some points
   x1=0;
   x2=100;
   y=25;
@@ -26,7 +27,6 @@ void display (void){
   double hold;
   glClear (GL_COLOR_BUFFER_BIT);
   glColor3f(red,0,blue);
-  //printf("{ %f , %f} { %f , %f} { %f , %f}",x1, y, x2, y, x3, y2);
   glBegin(GL_POLYGON);
       glVertex3f (x1, y, 0.0);
       glVertex3f (x2, y, 0.0);
@@ -35,9 +35,10 @@ void display (void){
    glEnd();
    glFlush();
    glutSwapBuffers();
-   //usleep(200000);
+	//moving the figure to the right
    x1+=speed;
    x2+=speed;
+	//code for color change
    if(red>=0){
 	red-=colorChange;
    }
@@ -50,11 +51,12 @@ void display (void){
 	blue=hold;
    }
    
-  
+  //handling when the right border is reached
    if (x2>=width){
 	x1-=speed;
 	speed=-speed;
    }
+   //handling when the left border is reached
    if(x1<=0){
 	x1=0;
 	speed=0;
@@ -63,6 +65,7 @@ void display (void){
  
 
 }
+
 void mouse(int btn, int state, int x, int y){
   if (btn==GLUT_RIGHT_BUTTON && state==GLUT_DOWN) exit(0);
   if(btn==GLUT_LEFT_BUTTON && state==GLUT_DOWN){

@@ -17,6 +17,7 @@ void init (void){
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0.0,1.0,0.0,1.0,-1.0,1.0);
+	//initializing some points
 	square.x1=0.0;
 	square.x2=50.0;
 	square.x3=50.0;
@@ -26,7 +27,6 @@ void init (void){
 	square.y3=0.0;
 	square.y4=0.0;
 	square.len=square.x2-square.x1;
-	printf("%f",square.len);
 	square.height=square.y1-square.y4;
 	eye.x1=square.len*5.0/6.0;
 	eye.x2=square.len*11.0/12.0;
@@ -45,7 +45,7 @@ void display (void){
 	double hold;
 	glClear (GL_COLOR_BUFFER_BIT);
 	glColor3f(0.0,0.0,0.0);
-	//printf("{ %f , %f} { %f , %f} { %f , %f}",x1, y, x2, y, x3, y2);
+	//drawing the shapes
 	glBegin(GL_POLYGON);
 		glVertex3f (square.x1, square.y1, 0.0);
 		glVertex3f (square.x2, square.y2, 0.0);
@@ -65,7 +65,7 @@ void display (void){
 	glEnd();
 	glFlush();
 	glutSwapBuffers();
-	//usleep(200000);
+	//determining if the figure needs to shrink or expand
 	length=abs(square.x2-square.x1);
 	if(length>=square.len*2){
 		expand=0;
@@ -73,6 +73,9 @@ void display (void){
 	if(length<=square.len){
 		expand=1;
 	}
+	/*handling when the figure hits the right edge. The eye slowly moves
+	through the figure and when it reaches the same position on the opposite
+	side, it begins to move back towards the left edge. I didn't get the 		chance to make it do anything when it gets to the left side, but 		ideally it would just turn around the same way.*/
 	if(square.x2>=width){
 		eye.x1-=rate;
 		eye.x2-=rate;
@@ -92,6 +95,7 @@ void display (void){
 			square.x1=square.x4;
 		}
 	}
+	//code for shrinking or expanding
 	else{
 		if(expand==1){
 			square.x2+=rate;

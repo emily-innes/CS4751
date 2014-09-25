@@ -21,7 +21,6 @@ void init (void){
 void display (void){
   glClear (GL_COLOR_BUFFER_BIT);
   glColor3f(0.0,0.0,1.0);
-  //printf("{ %f , %f} { %f , %f} { %f , %f}",x1, y, x2, y, x3, y2);
   glBegin(GL_POLYGON);
       glVertex3f (x1, y, 0.0);
       glVertex3f (x2, y, 0.0);
