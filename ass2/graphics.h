@@ -92,5 +92,60 @@ void midpoint(int x, int y, int r){
 	glEnd();
 }
 
-void clipLine(int x1, int y1, int x2, int y2, int xBound, int yBound){
+void clipLine(int x1, int y1, int x2, int y2, int xmax, int ymax, int xmin, int ymin){
+	int noClip=0;
+	int lClip=1;
+	int rClip=2;
+	int bClip=4;
+	int tClip=8;
+	int clip1=0;
+	int clip2=0;
+	if(x1<xmin) clip1|=lClip;
+	else if (x1>xmax) clip1|=rClip;
+	if(y1<ymin) clip1|=bClip;
+	else if (y1>ymax) clip1|=tClip;
+	if(x2<xmin) clip2|=lClip;
+	else if (x2>xmax) clip1|=rClip;
+	if(y2<ymin) clip2|=bClip;
+	else if (y2>ymax) clip2|=tClip;
+	printf("outcode 1: %d outcode 2: %d", clip1,clip2);
+	if(!(clip1|clip2)){
+		//trivially accepted
+		bresenham(x1,y1,x2,y2);
+	}
+	else{
+		if(!(clip1&clip2)){//and is 0
+			int xclip, yclip, code, m;
+			m=(y2-y1)/(x2-x1);
+			if(clip1) code=clip1;
+			else code=clip2;
+			if(code&tClip){
+				yclip=ymax;
+				xclip=x1+ (1/m)*(ymax-y1);
+			}
+			if(code&bClip){
+				yclip=ymin;
+				xclip=x1+(1/m)*(ymin-y1);
+			}
+			if(code&rClip){
+				xclip=xmax;
+				yclip=y1+m*(xmax-x1);
+			}
+			if(code&lClip){
+				xclip=xmin;
+				yclip=y1+m*(xmin-x1);
+			}
+			if(clip1==code){ 
+				clipLine(xclip,yclip,x2,y2, xmax, ymax, 			xmin,ymin);
+			}
+			else{
+				clipLine(x1,x2,xclip, yclip,xmax, ymax, 			xmin,ymin);
+			}
+		}
+	}
+			
+				
 }
+
+
+

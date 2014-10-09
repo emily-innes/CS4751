@@ -33,8 +33,8 @@ void display (void){
 		}
 	}
 	for(i=0;i<lineIndex;i++){
-		bresenham (lines[i].x1, lines[i].y1, lines[i].x2, lines[i].y2);
-		
+		//bresenham (lines[i].x1, lines[i].y1, lines[i].x2, lines[i].y2);
+		clipLine(lines[i].x1, lines[i].y1, lines[i].x2, lines[i].y2,300,300,0,0);
 		//printf("%d,%d,%d,%d\n",lines[i].x1, lines[i].y1, lines[i].x2, lines[i].y2);
 	}
 	for(i=0;i<circleIndex;i++){
