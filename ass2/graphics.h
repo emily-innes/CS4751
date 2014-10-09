@@ -58,7 +58,39 @@ void bresenham(int x0, int y0, int x1, int y1){
 	glEnd();
 }
 void midpoint(int x, int y, int r){
-//implement pls
+	//implement pls
+	int i,j,x0,y0,d1,d2;
+	x0=r;
+	y0=0;
+	glBegin(GL_POINTS);
+		//plot all of the points at npi/2
+		glVertex3i(0+x,r+y,0);
+		glVertex3i(0+x,-1*r+y,0);
+		glVertex3i(r+x,0+y,0);
+		glVertex3i(-1*r+x,0+y,0);
+		//calculate points for one octant
+		while(x0>=y0){
+			//decision variables
+			d1=abs(pow(x0-1,2)+pow(y0+1,2)-pow(r,2));
+			d2=abs(pow(x0,2)+pow(y0+1,2)-pow(r,2));
+			y0++;
+			if(d1<d2){
+				x0--;
+			}
+			//draw points in each octant
+			glVertex3i(x0+x,y0+y,0);
+			glVertex3i(-1*x0+x,y0+y,0);
+			glVertex3i(-1*x0+x,-1*y0+y,0);
+			glVertex3i(x0+x,-1*y0+y,0);
+			
+			glVertex3i(y0+x,x0+y,0);
+			glVertex3i(-1*y0+x, x0+y,0);
+			glVertex3i(-1*y0+x,-1*x0+y,0);
+			glVertex3i(y0+x,-1*x0+y,0);
+		}
+
+	glEnd();
 }
+
 void clipLine(int x1, int y1, int x2, int y2, int xBound, int yBound){
 }
