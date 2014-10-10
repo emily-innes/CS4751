@@ -126,14 +126,14 @@ void clipLine(int x1, int y1, int x2, int y2, int xmax, int ymax, int xmin, int 
 	
 	int clip1=0;
 	int clip2=0;
-	if(x1<xmin) clip1|=lClip;
-	else if (x1>xmax) clip1=rClip;
-	if(y1<ymin) clip1|=bClip;
-	else if (y1>ymax) clip1|=tClip;
-	if(x2<xmin) clip2|=lClip;
-	else if (x2>xmax) clip1|=rClip;
-	if(y2<ymin) clip2|=bClip;
-	else if (y2>ymax) clip2|=tClip;
+	if(x1<xmin) clip1=clip1|lClip;
+	else if (x1>xmax) clip1=clip1|rClip;
+	if(y1<ymin) clip1=clip1|bClip;
+	else if (y1>ymax) clip1=clip1|tClip;
+	if(x2<xmin) clip2=clip2|lClip;
+	else if (x2>xmax) clip2=clip2|rClip;
+	if(y2<ymin) clip2=clip2|bClip;
+	else if (y2>ymax) clip2=clip2|tClip;
 	printf("outcode 1: %d outcode 2: %d\n", clip1,clip2);
 	if(!(clip1|clip2)){
 		//trivially accepted
