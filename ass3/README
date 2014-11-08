@@ -1,0 +1,33 @@
+All programs can be run under linux by writing their respective names in terminal when the appropriate directory is open. 
+
+Code can be compiled using gcc -lGL -lGLU -lglut -o robot assignment3.c
+
+The menu system wasn't working for me on the computers in the lab, so I came up with the following control scheme for manipulating the robot parts and the camera angles:
+
+W rotates the camera upwards
+S rotates the camera downwards
+
+A rotates the camera to the left
+D rotates the camera to the right
+
+Q rotates the camera clockwise
+E rotates the camera counterclockwise
+
+I pans the camera upwards
+K pans the camera downwards
+J pans the camera to the left
+L pans the camera to the right
+Y pans the camera towards the robot
+U pans the camera away from the robot
+
+
+To control the robot parts, the following keys were used (in addition to clicking the mouse):
+
+Z controls the arm on what appears to be the left side
+X controls the arm on what appears to be the right side
+O rotates the head
+P moves the robot up and down
+
+right clicking moves the part in the opposite direction as left clicking.
+
+Pressing g was supposed to put the camera into the robot's head, however I didn't end up implementing this properly.
